@@ -396,6 +396,22 @@
 <div id="project-modal" aria-hidden="true" aria-labelledby="modal-description" role="dialog">
   <div class="modal-content" role="document">
     <img id="modal-img" src="" alt="Project image" />
+    <button id="btn-fullscreen" title="Tela cheia" aria-label="Tela cheia" style="
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(44,117,44,0.7);
+      border: none;
+      border-radius: 4px;
+      color: white;
+      padding: 4px 8px;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 10;
+      user-select: none;
+    ">
+      ⛶
+    </button>
     <div class="modal-desc" id="modal-description"></div>
   </div>
 </div>
@@ -1170,6 +1186,32 @@ function showGateProjects(categoryId, btn) {
     }
   });
 })();
+
+
+const btnFullscreen = document.getElementById('btn-fullscreen');
+const modalImg = document.getElementById('modal-img');
+
+btnFullscreen.addEventListener('click', (e) => {
+  e.stopPropagation(); // para não disparar outros eventos do modal
+
+  if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+    if (modalImg.requestFullscreen) {
+      modalImg.requestFullscreen().catch(() => alert('Fullscreen não suportado ou permitido'));
+    } else if (modalImg.webkitRequestFullscreen) {
+      modalImg.webkitRequestFullscreen();
+    } else if (modalImg.msRequestFullscreen) {
+      modalImg.msRequestFullscreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  }
+});
 
 
   
