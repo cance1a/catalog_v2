@@ -1066,68 +1066,113 @@ function showGateProjects(categoryId, btn) {
     else if (e.key === 'ArrowRight') modalNext();
   });
 
-// Swipe touch para mudar imagens no modal
+// Controle amélioré do modal-img para pinch-to-zoom e swipe separados, e opção fullscreen ao clicar
 (function() {
   const modalImg = document.getElementById('modal-img');
-  let startX = 0;
-  let endX = 0;
-  const threshold = 50; // distância mínima para swipe
+  let startX = 0, endX = 0, isDragging = false;
+  let lastTouchDistance = null;
 
   modalImg.style.cursor = 'pointer';
 
+  // Detecta o início do touch
   modalImg.addEventListener('touchstart', e => {
     if (e.touches.length === 1) {
       startX = e.touches[0].clientX;
+      isDragging = true;
+      lastTouchDistance = null;
+    } else if (e.touches.length === 2) {
+      // Pinch zoom começa
+      isDragging = false;
+      lastTouchDistance = getTouchDistance(e.touches);
+      // Define transform origin para o centro do gesto
+      let centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      let centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+      const rect = modalImg.getBoundingClientRect();
+      const originX = ((centerX - rect.left) / rect.width) * 100;
+      const originY = ((centerY - rect.top) / rect.height) * 100;
+      modalImg.style.transformOrigin = `${originX}% ${originY}%`;
     }
-  }, { passive: true });
+  }, { passive: false });
 
+  // Detecta movimento do touch
   modalImg.addEventListener('touchmove', e => {
-    if (e.touches.length === 1) {
+    if (e.touches.length === 1 && isDragging) {
       endX = e.touches[0].clientX;
-    }
-  }, { passive: true });
+    } else if (e.touches.length === 2) {
+      e.preventDefault(); // impede scroll da página
+      let currentDistance = getTouchDistance(e.touches);
+      let scale = 1;
+      if (lastTouchDistance) {
+        scale = currentDistance / lastTouchDistance;
+      }
+      lastTouchDistance = currentDistance;
 
+      const currentTransform = window.getComputedStyle(modalImg).transform;
+      let matrix = currentTransform === 'none' ? [1,0,0,1,0,0] : currentTransform.match(/matrix3d\((.+)\)/) ? currentTransform.match(/matrix3d\((.+)\)/)[1].split(', ') : currentTransform.match(/matrix\((.+)\)/)[1].split(', ');
+      let currentScaleX = parseFloat(matrix[0]);
+      let currentScaleY = parseFloat(matrix[3]);
+      let newScaleX = currentScaleX * scale;
+      let newScaleY = currentScaleY * scale;
+      newScaleX = Math.min(Math.max(1, newScaleX), 4);
+      newScaleY = Math.min(Math.max(1, newScaleY), 4);
+      modalImg.style.transform = `scale(${newScaleX}, ${newScaleY})`;
+    }
+  }, { passive: false });
+
+  // Detecta fim do toque para swipe
   modalImg.addEventListener('touchend', e => {
+    if (!isDragging) return;
+    isDragging = false;
     const diffX = endX - startX;
+    const threshold = 50;
     if (Math.abs(diffX) > threshold) {
       if (diffX > 0) modalPrev();
       else modalNext();
     }
-    startX = 0;
     endX = 0;
+    startX = 0;
   });
 
-  // Alternar modo tela cheia ao clicar na imagem
+  // Função auxiliar para distância entre dois toques
+  function getTouchDistance(touches) {
+    const [touch1, touch2] = touches;
+    const dx = touch2.clientX - touch1.clientX;
+    const dy = touch2.clientY - touch1.clientY;
+    return Math.hypot(dx, dy);
+  }
+
+  // Toggle tela cheia ao clicar
   modalImg.addEventListener('click', () => {
+    // Se a imagem estiver zoomada (>1), resetar zoom ao clicar
+    const currentTransform = modalImg.style.transform;
+    if (currentTransform && currentTransform !== '' && currentTransform !== 'scale(1)') {
+      modalImg.style.transform = 'scale(1)';
+      return;
+    }
+
+    // Se não for fullscreen, ativa fullscreen, se for, sai
     if (!document.fullscreenElement) {
-      if (modalImg.requestFullscreen) {
-        modalImg.requestFullscreen();
-      } else if (modalImg.webkitRequestFullscreen) { /* Safari */
-        modalImg.webkitRequestFullscreen();
-      } else if (modalImg.msRequestFullscreen) { /* IE11 */
-        modalImg.msRequestFullscreen();
-      }
+      if (modalImg.requestFullscreen) modalImg.requestFullscreen();
+      else if (modalImg.webkitRequestFullscreen) modalImg.webkitRequestFullscreen();
+      else if (modalImg.msRequestFullscreen) modalImg.msRequestFullscreen();
     } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) { /* Safari */
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) { /* IE11 */
-        document.msExitFullscreen();
-      }
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      else if (document.msExitFullscreen) document.msExitFullscreen();
     }
   });
 
-  // Sai do fullscreen: resetar zoom e transform se necessário
+  // Reset zoom ao sair do fullscreen
   document.addEventListener('fullscreenchange', () => {
     if (!document.fullscreenElement) {
-      modalImg.style.transform = '';
+      modalImg.style.transform = 'scale(1)';
+      modalImg.style.transformOrigin = '50% 50%';
     }
   });
 })();
 
 
-
+  
 
   setLanguage(currentLang);
   showSection('Home');
