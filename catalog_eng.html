@@ -353,14 +353,6 @@
       <img src="img/logo_rb/logo_sm.png" alt="Metal Solutions Icon" class="icon" />
       <span id="menu-sm-label">Soluções Metálicas</span>
     </div>
-    <div class="menu-item" onclick="showSection('Gates')" id="icon-po" role="button" tabindex="0" aria-label="Gates Section">
-      <img src="img/logo_rb/logo_co.png" alt="Gates Icon" class="icon" />
-      <span id="menu-po-label">Portões</span>
-    </div>
-    <div class="menu-item" onclick="showSection('Claraboias')" id="icon-cla" role="button" tabindex="0" aria-label="Claraboias Section">
-      <img src="img/logo_rb/logo_cla.png" alt="Claraboias Icon" class="icon" />
-      <span id="menu-cla-label">Claraboias</span>
-    </div>
   </div>
   <div class="languages" role="navigation" aria-label="Language selection">
     <div class="language-btn" onclick="setLanguage('pt')" id="lang-pt" role="button" tabindex="0" aria-label="Portuguese Language">
@@ -434,24 +426,29 @@
 
   const aluminumCategories = [
     {
-      id: 'fachadas',
-      prefix: 'alf-',
-      titles: { pt: 'Fachadas', en: 'Façades', es: 'Fachadas', fr: 'Façades' }
+      id: 'portoes',
+      prefix: 'alpo-',
+      titles: { pt: 'Portões', en: 'Façades', es: 'Fachadas', fr: 'Façades' }
     },
     {
-      id: 'gradeamentos',
+      id: 'tapavistas',
       prefix: 'alg-',
-      titles: { pt: 'Gradeamentos', en: 'Railings', es: 'Barandillas', fr: 'Garde-corps' }
+      titles: { pt: 'Tapa Vistas', en: 'Railings', es: 'Barandillas', fr: 'Garde-corps' }
     },
     {
-      id: 'escadas',
+      id: 'claraboias',
       prefix: 'ale-',
-      titles: { pt: 'Escadas', en: 'Stairs', es: 'Escaleras', fr: 'Escaliers' }
+      titles: { pt: 'Claraboias', en: 'Stairs', es: 'Escaleras', fr: 'Escaliers' }
     },
     {
-      id: 'guardas',
+      id: 'caixilharia',
       prefix: 'alguardas-',
-      titles: { pt: 'Guardas', en: 'Stairs', es: 'Escaleras', fr: 'Escaliers' }
+      titles: { pt: 'Caixilharia', en: 'Stairs', es: 'Escaleras', fr: 'Escaliers' }
+    },
+    {
+      id: 'fachadas',
+      prefix: 'alfachadas-',
+      titles: { pt: 'Fachadas', en: 'Stairs', es: 'Escaleras', fr: 'Escaliers' }
     }
   ];
 
@@ -465,76 +462,76 @@ const projectsData = {
   },
 
 // Portões de Alumínio
-  "poa-1": {
+  "alpo-1": {
     images: ["img/img_po/po_al/foto_al_co_sm_po.png", "img/img_po/po_al/foto_al_co_sm_po_2.jpg", "img/img_po/po_al/foto_al_co_sm_po_3.jpg"],
     descriptions: { pt: "Braga, 2025", en: "Braga, 2025", es: "Braga, 2025", fr: "Braga, 2025" },
     title: { pt: "Portão Alumínio 1", en: "Aluminum Gate 1", es: "Portón Aluminio 1", fr: "Portail Aluminium 1" }
   },
-  "poa-2": {
+  "alpo-2": {
     images: ["img/img_po/po_al/foto_al_e_po.png", "img/img_po/po_al/foto_al_e_po_2.png"],
     descriptions: { pt: "Porto, 2025", en: "Porto, 2025", es: "Oporto, 2025", fr: "Porto, 2025" },
     title: { pt: "Portão Alumínio 2", en: "Aluminum Gate 2", es: "Portón Aluminio 2", fr: "Portail Aluminium 2" }
   },
-  "poa-3": {
+  "alpo-3": {
     images: ["img/img_po/po_al/2_foto_al_co_sm_po.png", "img/img_po/po_al/2_foto_al_co_sm_po_2.png"],
     descriptions: { pt: "Porto, 2025", en: "Porto, 2025", es: "Oporto, 2025", fr: "Porto, 2025" },
     title: { pt: "Portão Alumínio 2", en: "Aluminum Gate 2", es: "Portón Aluminio 2", fr: "Portail Aluminium 2" }
   },
-  "poa-4": {
+  "alpo-4": {
     images: ["img/img_po/po_al/3_foto_po_al.jpg"],
     descriptions: { pt: "Porto, 2025", en: "Porto, 2025", es: "Oporto, 2025", fr: "Porto, 2025" },
     title: { pt: "Portão Alumínio 2", en: "Aluminum Gate 2", es: "Portón Aluminio 2", fr: "Portail Aluminium 2" }
   },
-  "poa-5": {
+  "alpo-5": {
     images: ["img/img_po/po_al/4_foto_po_al.jpg"],
     descriptions: { pt: "Porto, 2025", en: "Porto, 2025", es: "Oporto, 2025", fr: "Porto, 2025" },
     title: { pt: "Portão Alumínio 2", en: "Aluminum Gate 2", es: "Portón Aluminio 2", fr: "Portail Aluminium 2" }
   },
-  "poa-6": {
+  "alpo-6": {
     images: ["img/img_po/po_al/5_foto_po_al.jpg"],
     descriptions: { pt: "Porto, 2025", en: "Porto, 2025", es: "Oporto, 2025", fr: "Porto, 2025" },
     title: { pt: "Portão Alumínio 2", en: "Aluminum Gate 2", es: "Portón Aluminio 2", fr: "Portail Aluminium 2" }
   },
-  "poa-7": {
+  "alpo-7": {
     images: ["img/img_po/po_al/6_foto_po_al.jpg"],
     descriptions: { pt: "Porto, 2025", en: "Porto, 2025", es: "Oporto, 2025", fr: "Porto, 2025" },
     title: { pt: "Portão Alumínio 2", en: "Aluminum Gate 2", es: "Portón Aluminio 2", fr: "Portail Aluminium 2" }
   },
-  "poa-8": {
+  "alpo-8": {
     images: ["img/img_po/po_al/7_foto_po_al.jpg"],
     descriptions: { pt: "Porto, 2025", en: "Porto, 2025", es: "Oporto, 2025", fr: "Porto, 2025" },
     title: { pt: "Portão Alumínio 2", en: "Aluminum Gate 2", es: "Portón Aluminio 2", fr: "Portail Aluminium 2" }
   },
-  "poa-9": {
+  "alpo-9": {
     images: ["img/img_po/po_al/8_foto_po_al.jpg"],
     descriptions: { pt: "Porto, 2025", en: "Porto, 2025", es: "Oporto, 2025", fr: "Porto, 2025" },
     title: { pt: "Portão Alumínio 2", en: "Aluminum Gate 2", es: "Portón Aluminio 2", fr: "Portail Aluminium 2" }
   },
-  "poa-10": {
+  "alpo-10": {
     images: ["img/img_po/po_al/9_foto_po_al.jpg"],
     descriptions: { pt: "Porto, 2025", en: "Porto, 2025", es: "Oporto, 2025", fr: "Porto, 2025" },
     title: { pt: "Portão Alumínio 2", en: "Aluminum Gate 2", es: "Portón Aluminio 2", fr: "Portail Aluminium 2" }
   },
 
 // Alumínio - Fachadas
-  "alf-1": {
+  "alfachadas-1": {
     images: ["img/img_al/fachadas/1_fachada_al_1.jpg", "img/img_al/fachadas/1_fachada_al_2.jpg", "img/img_al/fachadas/1_fachada_al_3.jpg"],
     descriptions: { pt: "Obra em x-sitio e x-ano", en: "Project at x-site, x-year", es: "Obra en x-sitio, x-año", fr: "Travail à x-sitio et x-année" },
     title: { pt: "Construção Residencial", en: "Modern Aluminum Stairs", es: "Escalera de Aluminio Moderna", fr: "Escalier en Aluminium Moderne" }
   },
-  "alf-2": {
+  "alfachadas-2": {
     images: ["img/img_al/fachadas/fachada_al_1.jpg"],
     descriptions: { pt: "Obra em x-sitio e x-ano", en: "Project at x-site, x-year", es: "Obra en x-sitio, x-año", fr: "Travail à x-sitio et x-année" },
     title: { pt: "Construção Residencial", en: "Modern Aluminum Stairs", es: "Escalera de Aluminio Moderna", fr: "Escalier en Aluminium Moderne" }
   },
   
-  "alf-3": {
+  "alfachadas-3": {
     images: ["img/img_al/fachadas/fachada_al_2.jpg"],
     descriptions: { pt: "Obra em x-sitio e x-ano", en: "Project at x-site, x-year", es: "Obra en x-sitio, x-año", fr: "Travail à x-sitio et x-année" },
     title: { pt: "Construção Residencial", en: "Modern Aluminum Stairs", es: "Escalera de Aluminio Moderna", fr: "Escalier en Aluminium Moderne" }
   },
   
-   "alf-4": {
+   "alfachadas-4": {
     images: ["img/img_al/fachadas/fachada_al_3.jpg"],
     descriptions: { pt: "Obra em x-sitio e x-ano", en: "Project at x-site, x-year", es: "Obra en x-sitio, x-año", fr: "Travail à x-sitio et x-année" },
     title: { pt: "Construção Residencial", en: "Modern Aluminum Stairs", es: "Escalera de Aluminio Moderna", fr: "Escalier en Aluminium Moderne" }
