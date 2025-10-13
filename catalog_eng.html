@@ -378,8 +378,7 @@
     <button class="option" id="btn-aluminio" onclick="showSection('Aluminum')">Alumínio</button>
     <button class="option" id="btn-construcoes" onclick="showSection('MetalConstructions')">Construções</button>
     <button class="option" id="btn-solucoes" onclick="showSection('MetalSolutions')">Soluções Metálicas</button>
-    <button class="option" id="btn-portoes" onclick="showSection('Gates')">Portões</button>
-    <button class="option" id="btn-claraboias" onclick="showSection('Claraboias')">Claraboias</button>
+
   </div>
 </div>
 
@@ -1066,7 +1065,7 @@ function showGateProjects(categoryId, btn) {
   }
 
   function modalPrev() {
-    if (!modalProject) return;
+    if (!modalProj/ect) return;
     const imgCount = (projectsData[modalProject].images || []).length;
     if (imgCount === 0) return;
     modalIndex = (modalIndex - 1 + imgCount) % imgCount;
