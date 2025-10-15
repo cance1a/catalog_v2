@@ -408,59 +408,135 @@
 </div>
 
 <script>
-  'use strict';
+"use strict";
 
-  const cm_feCategories = [
-    {
-      id: 'estrutura_fe',
-      prefix: 'estm-',
-      titles: { pt: 'Portões de Alumínio', en: 'Aluminum Gates', es: 'Portones de Aluminio', fr: 'Portails en Aluminium' }
+// Definição de categorias para Metal Constructions (antes Gates)
+const cmfeCategories = [
+  {
+    id: "estruturafe",
+    prefix: "estm-",
+    titles: {
+      pt: "Portões de Alumínio",
+      en: "Aluminum Gates",
+      es: "Portones de Aluminio",
+      fr: "Portails en Aluminium",
     },
-    {
-      id: 'escadas_fe',
-      prefix: 'esc-',
-      titles: { pt: 'Portões de Ferro', en: 'Iron Gates', es: 'Portones de Hierro', fr: 'Portails en Fer' }
-    }
-    {
-      id: 'guardas_fe',
-      prefix: 'gua-',
-      titles: { pt: 'Portões de Ferro', en: 'Iron Gates', es: 'Portones de Hierro', fr: 'Portails en Fer' }
-    }
-    {
-      id: 'portoes_fe',
-      prefix: 'fepo-',
-      titles: { pt: 'Portões de Ferro', en: 'Iron Gates', es: 'Portones de Hierro', fr: 'Portails en Fer' }
-    }
-    {
-      id: 'tapavistas_fe',
-      prefix: 'tapavistas-',
-      titles: { pt: 'Portões de Ferro', en: 'Iron Gates', es: 'Portones de Hierro', fr: 'Portails en Fer' }
-    }
-  ];
+  },
+  {
+    id: "escadasfe",
+    prefix: "esc-",
+    titles: {
+      pt: "Portões de Ferro",
+      en: "Iron Gates",
+      es: "Portones de Hierro",
+      fr: "Portails en Fer",
+    },
+  },
+  {
+    id: "guardasfe",
+    prefix: "gua-",
+    titles: {
+      pt: "Portões de Ferro",
+      en: "Iron Gates",
+      es: "Portones de Hierro",
+      fr: "Portails en Fer",
+    },
+  },
+  {
+    id: "portoesfe",
+    prefix: "fepo-",
+    titles: {
+      pt: "Portões de Ferro",
+      en: "Iron Gates",
+      es: "Portones de Hierro",
+      fr: "Portails en Fer",
+    },
+  },
+  {
+    id: "tapavistasfe",
+    prefix: "tapavistas-",
+    titles: {
+      pt: "Portões de Ferro",
+      en: "Iron Gates",
+      es: "Portones de Hierro",
+      fr: "Portails en Fer",
+    },
+  },
+];
 
-  const aluminumCategories = [
-    {
-      id: 'portoes',
-      prefix: 'alpo-',
-      titles: { pt: 'Portões', en: 'Façades', es: 'Fachadas', fr: 'Façades' }
+// Categorias para Alumínio
+const aluminumCategories = [
+  {
+    id: "portoes",
+    prefix: "alpo-",
+    titles: {
+      pt: "Portes",
+      en: "Faades",
+      es: "Fachadas",
+      fr: "Faades",
     },
-    {
-      id: 'tapavistas',
-      prefix: 'altapa_vistas-',
-      titles: { pt: 'Tapa Vistas', en: 'Railings', es: 'Barandillas', fr: 'Garde-corps' }
+  },
+  {
+    id: "tapavistas",
+    prefix: "altapavistas-",
+    titles: {
+      pt: "Tapa Vistas",
+      en: "Railings",
+      es: "Barandillas",
+      fr: "Garde-corps",
     },
-    {
-      id: 'claraboias',
-      prefix: 'alclaraboia-',
-      titles: { pt: 'Claraboias', en: 'Stairs', es: 'Escaleras', fr: 'Escaliers' }
+  },
+  {
+    id: "claraboias",
+    prefix: "alclaraboia-",
+    titles: {
+      pt: "[translate:Clarabóias]",
+      en: "[translate:Skylights]",
+      es: "[translate:Lucernarios]",
+      fr: "[translate:Lanternaux]",
     },
-    {
-      id: 'caixilharia',
-      prefix: 'alcaixilharia-',
-      titles: { pt: 'Caixilharia', en: 'Stairs', es: 'Escaleras', fr: 'Escaliers' }
+  },
+  {
+    id: "caixilharia",
+    prefix: "alcaixilharia-",
+    titles: {
+      pt: "Caixilharia",
+      en: "Windows",
+      es: "Ventanas",
+      fr: "Fenêtres",
     },
-  ];
+  },
+  {
+    id: "fachadas",
+    prefix: "alfachadas-",
+    titles: {
+      pt: "Fachadas",
+      en: "Facades",
+      es: "Fachadas",
+      fr: "Façades",
+    },
+  },
+];
 
+// Estrutura das secções principais
+const sectionsInfo = {
+  Aluminum: {
+    name: "Alumínio",
+    prefix: null,
+    categories: aluminumCategories,
+  },
+  MetalConstructions: {
+    name: "Construções Metálicas",
+    prefix: null,
+    categories: cmfeCategories,
+  },
+  MetalSolutions: {
+    name: "Soluções Metálicas",
+    prefix: "sm-",
+  },
+};
+
+// Dados dos projetos - estrutura fictícia de exemplo
 const projectsData = {
 
 // Portões de Alumínio
@@ -657,54 +733,117 @@ const projectsData = {
   } 
 };
 
+// Global para idioma corrente
+let currentLang = "pt";
 
-  let currentLang = 'pt';
-  let currentCm_feCategory = cm_feCategories[0].id;
-  let currentAluminumCategory = aluminumCategories[0].id;
+// Categorias correntes selecionadas
+let currentCmfeCategory = cmfeCategories[0].id;
+let currentAluminumCategory = aluminumCategories[0].id;
 
-  const sectionsInfo = {
-    Aluminum: { name: 'Alumínio', prefix: null, categories: aluminumCategories },
-    MetalConstructions: { name: 'Construções Metálicas', prefix: null, categories: cm_feCategories },
-    MetalSolutions: { name: 'Soluções Metálicas', prefix: 'sm-' },
-  };
+// Container principal para inserir secções
+const container = document.getElementById("sections-container");
 
-  function createProjectCard(projKey, projData) {
-    const projDiv = document.createElement('div');
-    projDiv.className = 'project';
-    projDiv.onclick = () => openModal(projKey);
+/**
+ * Cria o cartão de projeto dado uma chave e dados
+ * @param {string} projKey - Chave do projeto
+ * @param {object} projData - Dados do projeto
+ * @returns {HTMLElement} - Div do projeto pronta para ser inserida
+ */
+function createProjectCard(projKey, projData) {
+  const projDiv = document.createElement("div");
+  projDiv.className = "project";
+  projDiv.onclick = () => openModal(projKey);
 
-    const img = document.createElement('img');
-    img.src = projData.images && projData.images.length > 0 ? projData.images[0] : '';
-    img.alt = projData.title[currentLang] || 'Project image';
-    projDiv.appendChild(img);
+  const img = document.createElement("img");
+  img.src = projData.images && projData.images.length > 0 ? projData.images[0] : "";
+  img.alt = projData.title[currentLang] + " Project image";
+  projDiv.appendChild(img);
 
-    const titleDiv = document.createElement('div');
-    titleDiv.className = 'project-title';
-    titleDiv.id = 'title-' + projKey;
-    titleDiv.innerText = projData.title[currentLang] || '';
-    projDiv.appendChild(titleDiv);
+  const titleDiv = document.createElement("div");
+  titleDiv.className = "project-title";
+  titleDiv.id = "title-" + projKey;
+  titleDiv.innerText = projData.title[currentLang];
+  projDiv.appendChild(titleDiv);
 
-    const descDiv = document.createElement('div');
-    descDiv.className = 'project-desc';
-    descDiv.id = 'desc-' + projKey;
-    descDiv.innerText = projData.descriptions[currentLang] || '';
-    projDiv.appendChild(descDiv);
+  const descDiv = document.createElement("div");
+  descDiv.className = "project-desc";
+  descDiv.id = "desc-" + projKey;
+  descDiv.innerText = projData.descriptions[currentLang];
+  projDiv.appendChild(descDiv);
 
-    return projDiv;
-  }
+  return projDiv;
+}
 
-  const container = document.getElementById('sections-container');
+/**
+ * Mostra projetos da categoria cmfe selecionada
+ * @param {string} categoryId - Categoria selecionada
+ * @param {HTMLElement} btn - Botão clicado para ativar
+ */
+function showCmfeProjects(categoryId, btn) {
+  const list = document.getElementById("cmfe-project-list");
+  const cat = cmfeCategories.find(c => c.id === categoryId);
 
-  Object.entries(sectionsInfo).forEach(([key, value]) => {
-    const section = document.createElement('div');
-    section.id = key;
-    section.className = 'section';
+  // Limpa estado ativo anterior
+  document.querySelectorAll(".cmfe-category-btn").forEach(b => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
 
-    const h2 = document.createElement('h2');
-    h2.innerText = value.name;
-    section.appendChild(h2);
+  // Limpa a lista de projetos
+  list.innerHTML = "";
+  if (!cat) return;
 
-   // Criar botões para categorias
+  // Cria os cartões de projeto do prefixo da categoria
+  Object.entries(projectsData).forEach(([key, proj]) => {
+    if (key.startsWith(cat.prefix)) {
+      const div = createProjectCard(key, proj);
+      list.appendChild(div);
+    }
+  });
+
+  // Anima entrada dos projetos
+  list.querySelectorAll(".project").forEach((proj, i) =>
+    setTimeout(() => proj.classList.add("show"), i * 120)
+  );
+}
+
+/**
+ * Mostra projetos da categoria de alumínio selecionada
+ * @param {string} categoryId - Categoria selecionada
+ * @param {HTMLElement} btn - Botão clicado para ativar
+ */
+function showAluminumProjects(categoryId, btn) {
+  const list = document.getElementById("alum-project-list");
+  const cat = aluminumCategories.find(c => c.id === categoryId);
+
+  document.querySelectorAll(".alum-category-btn").forEach(b => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+
+  list.innerHTML = "";
+  if (!cat) return;
+
+  Object.entries(projectsData).forEach(([key, proj]) => {
+    if (key.startsWith(cat.prefix)) {
+      const div = createProjectCard(key, proj);
+      list.appendChild(div);
+    }
+  });
+
+  list.querySelectorAll(".project").forEach((proj, i) =>
+    setTimeout(() => proj.classList.add("show"), i * 120)
+  );
+}
+
+// Criar as secções dinamicamente e seus botões
+Object.entries(sectionsInfo).forEach(([key, value]) => {
+  const section = document.createElement("div");
+  section.id = key;
+  section.className = "section";
+
+  // Título da secção
+  const h2 = document.createElement("h2");
+  h2.innerText = value.name;
+  section.appendChild(h2);
+
+  // Criar botões para categorias
   if (value.categories) {
     const catList = document.createElement("div");
     catList.className = "gate-category-list";
@@ -723,415 +862,327 @@ const projectsData = {
       btn.id = key === "MetalConstructions" ? "cmfe-cat-" + cat.id : "alum-cat-" + cat.id;
 
       catList.appendChild(btn);
-    });  
+    });
 
-      section.appendChild(catList);
+    section.appendChild(catList);
+  }
 
-      const list = document.createElement('div');
-      list.className = 'project-list';
-      list.id = key === 'Gates' ? 'gate-project-list' : 'alum-project-list';
-      section.appendChild(list);
-    } else {
-      const list = document.createElement('div');
-      list.className = 'project-list';
+  // Div para lista de projetos
+  const list = document.createElement("div");
+  list.className = "project-list";
 
-      Object.entries(projectsData).forEach(([projKey, projData]) => {
-        if (projKey.startsWith(value.prefix)) {
-          const projDiv = createProjectCard(projKey, projData);
-          list.appendChild(projDiv);
-        }
-      });
+  // ID para as listas de projetos
+  if (key === "MetalConstructions") list.id = "cmfe-project-list";
+  else if (key === "Aluminum") list.id = "alum-project-list";
 
-      section.appendChild(list);
+  section.appendChild(list);
+
+  container.appendChild(section);
+});
+
+// Função para mostrar uma secção ao ser clicada no menu
+function showSection(sectionId) {
+  const home = document.getElementById("Home");
+  const allSections = document.querySelectorAll(".section, #Home");
+
+  allSections.forEach(sec => {
+    if (!sec) return;
+    if (sec.id !== sectionId) {
+      // Esconde as outras secções
+      sec.style.display = "none";
+
+      // Remove animação dos projetos
+      sec.querySelectorAll(".project").forEach(p => p.classList.remove("show"));
     }
-
-    container.appendChild(section);
   });
 
-    // Atualiza botões cmfeCategories
+  const newSec = sectionId === "Home" ? home : document.getElementById(sectionId);
+  if (!newSec) return;
+
+  newSec.style.display = sectionId === "Home" ? "flex" : "block";
+
+  // No caso de MetalConstructions, mostra categoria atual usando cmfeCategory
+  if (sectionId === "MetalConstructions") {
+    if (currentCmfeCategory)
+      showCmfeProjects(currentCmfeCategory, document.getElementById("cmfe-cat-" + currentCmfeCategory));
+  }
+
+  // No caso de Aluminum, mostra categoria atual de alumínio
+  if (sectionId === "Aluminum") {
+    if (currentAluminumCategory)
+      showAluminumProjects(currentAluminumCategory, document.getElementById("alum-cat-" + currentAluminumCategory));
+  }
+
+  // Anima os projetos da secção aberta
+  const projects = newSec.querySelectorAll(".project");
+  projects.forEach((proj, i) => setTimeout(() => proj.classList.add("show"), i * 150));
+
+  // Atualiza o menu para mostrar o item ativo
+  document.querySelectorAll(".menu-item").forEach(mi => mi.classList.remove("active"));
+
+  const menuMap = {
+    Home: "icon-home",
+    Aluminum: "icon-al",
+    MetalConstructions: "icon-co",
+    MetalSolutions: "icon-sm",
+  };
+
+  const menuId = menuMap[sectionId];
+
+  if (menuId) {
+    const el = document.getElementById(menuId);
+    if (el) el.classList.add("active");
+  }
+}
+
+// Função para mudar idioma e atualizar UI
+function setLanguage(lang) {
+  currentLang = lang;
+
+  // Atualiza títulos dos projetos e descrições
+  document.querySelectorAll(".project-title").forEach(titleDiv => {
+    const key = titleDiv.id.replace("title-", "");
+    if (projectsData[key]) titleDiv.innerText = projectsData[key].title[lang];
+  });
+
+  document.querySelectorAll(".project-desc").forEach(descDiv => {
+    const key = descDiv.id.replace("desc-", "");
+    if (projectsData[key]) descDiv.innerText = projectsData[key].descriptions[lang];
+  });
+
+  // Atualiza botões cmfeCategories
   cmfeCategories.forEach(cat => {
     const btn = document.getElementById("cmfe-cat-" + cat.id);
     if (btn) btn.innerText = cat.titles[lang];
   });
 
-  function showAluminumProjects(categoryId, btn) {
-  const list = document.getElementById('alum-project-list');
-  const cat = aluminumCategories.find(c => c.id === categoryId);
-
-  // limpar estado ativo anterior
-  document.querySelectorAll('#alum-categories .gate-category-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-
-  // limpar lista antes de carregar
-  list.innerHTML = '';
-  if (!cat) return;
-
-  // gerar projetos que correspondem ao prefixo da categoria
-  Object.entries(projectsData).forEach(([key, proj]) => {
-    if (key.startsWith(cat.prefix)) {
-      const div = createProjectCard(key, proj);
-      list.appendChild(div);
-    }
+  // Atualiza botões aluminumCategories
+  aluminumCategories.forEach(cat => {
+    const btn = document.getElementById("alum-cat-" + cat.id);
+    if (btn) btn.innerText = cat.titles[lang];
   });
 
-  // animar entrada
-  list.querySelectorAll('.project').forEach((proj, i) => {
-    setTimeout(() => proj.classList.add('show'), i * 120);
-  });
+  // Atualiza textos restantes (exemplo: home, subtitulo, botões)
+  const homeTexts = translations[lang].home;
+  if (homeTexts) {
+    const titleMain = document.getElementById("title-main");
+    const subtitleMain = document.getElementById("subtitle-main");
+    const btnAlum = document.getElementById("btn-aluminio");
+    const btnConstr = document.getElementById("btn-construcoes");
+    const btnSol = document.getElementById("btn-solucoes");
+
+    if (titleMain) titleMain.innerText = homeTexts.title;
+    if (subtitleMain) subtitleMain.innerText = homeTexts.subtitle;
+    if (btnAlum) btnAlum.innerText = homeTexts.buttons.alum;
+    if (btnConstr) btnConstr.innerText = homeTexts.buttons.constr;
+    if (btnSol) btnSol.innerText = homeTexts.buttons.sol;
+  }
+
+  // Atualiza texto do menu
+  const menuTexts = translations[lang].menu;
+  if (menuTexts) {
+    const menuHome = document.getElementById("menu-home-label");
+    const menuAlum = document.getElementById("menu-al-label");
+    const menuConstr = document.getElementById("menu-co-label");
+    const menuSol = document.getElementById("menu-sm-label");
+
+    if (menuHome) menuHome.innerText = menuTexts.home;
+    if (menuAlum) menuAlum.innerText = menuTexts.alum;
+    if (menuConstr) menuConstr.innerText = menuTexts.constr;
+    if (menuSol) menuSol.innerText = menuTexts.sol;
+  }
 }
 
+// Controlo do Modal para projetos (abertura/fechar)
+let modalProject = null;
+let modalIndex = 0;
 
-function showGateProjects(categoryId, btn) {
-  const list = document.getElementById('gate-project-list');
-  const cat = gateCategories.find(c => c.id === categoryId);
+// Abre o modal com o projeto selecionado
+function openModal(projKey) {
+  modalProject = projKey;
+  modalIndex = 0;
+  updateModal();
 
-  // limpar estado ativo anterior
-  document.querySelectorAll('#gate-categories .gate-category-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-
-  // limpar lista antes de carregar
-  list.innerHTML = '';
-  if (!cat) return;
-
-  // gerar projetos que correspondem ao prefixo da categoria
-  Object.entries(projectsData).forEach(([key, proj]) => {
-    if (key.startsWith(cat.prefix)) {
-      const div = createProjectCard(key, proj);
-      list.appendChild(div);
-    }
-  });
-
-  // animar entrada
-  list.querySelectorAll('.project').forEach((proj, i) => {
-    setTimeout(() => proj.classList.add('show'), i * 120);
-  });
+  const modal = document.getElementById("project-modal");
+  if (!modal) return;
+  modal.style.display = "flex";
+  modal.setAttribute("aria-hidden", "false");
 }
 
+// Fecha o modal
+function closeModal() {
+  const modal = document.getElementById("project-modal");
+  if (!modal) return;
+  modal.style.display = "none";
+  modal.setAttribute("aria-hidden", "true");
 
+  modalProject = null;
+  modalIndex = 0;
+}
 
-  function showSection(sectionId) {
-    const home = document.getElementById('Home');
-    const allSections = [...document.querySelectorAll('.section'), home];
-    allSections.forEach(sec => {
-      if (!sec) return;
-      if (sec.id !== sectionId) {
-        sec.style.display = 'none';
-        sec.querySelectorAll('.project').forEach(p => p.classList.remove('show'));
-      }
-    });
+// Atualiza o conteúdo do modal com a imagem/configuração do projeto
+function updateModal() {
+  if (!modalProject) return;
+  const proj = projectsData[modalProject];
+  if (!proj) return;
 
-    const newSec = sectionId === 'Home' ? home : document.getElementById(sectionId);
-    if (!newSec) return;
+  const imgEl = document.getElementById("modal-img");
+  const descEl = document.getElementById("modal-description");
+  if (!imgEl || !descEl) return;
 
-    newSec.style.display = sectionId === 'Home' ? 'flex' : 'block';
+  imgEl.src = proj.images[modalIndex] || "";
+  descEl.innerText = proj.descriptions[currentLang] || "";
+}
 
-    if (sectionId !== 'Home') {
-      if (sectionId === 'MetalConstructions') {
-        if (currentGateCategory) {
-          showGateProjects(currentCm_feCategoryCategory, document.getElementById('cm_fe-cat-' + currentCm_feCategoryCategory));
-        }
-      }
-      if (sectionId === 'Aluminum') {
-        if (currentAluminumCategory) {
-          showAluminumProjects(currentAluminumCategory, document.getElementById('alum-cat-' + currentAluminumCategory));
-        }
-      }
-      const projects = newSec.querySelectorAll('.project');
-      projects.forEach((proj, i) => {
-        setTimeout(() => proj.classList.add('show'), i * 150);
-      });
-    }
+// Navegação imagens no modal
+function modalPrev() {
+  if (!modalProject) return;
+  const imgCount = projectsData[modalProject].images.length;
+  if (imgCount === 0) return;
 
-    document.querySelectorAll('.menu-item').forEach(mi => mi.classList.remove('active'));
-    const menuMap = { Home: 'icon-home', Aluminum: 'icon-al', MetalConstructions: 'icon-co', MetalSolutions: 'icon-sm'};
-    const menuId = menuMap[sectionId];
-    if (menuId) {
-      const el = document.getElementById(menuId);
-      if (el) el.classList.add('active');
-    }
+  modalIndex = (modalIndex - 1 + imgCount) % imgCount;
+  updateModal();
+}
+
+function modalNext() {
+  if (!modalProject) return;
+  const imgCount = projectsData[modalProject].images.length;
+  if (imgCount === 0) return;
+
+  modalIndex = (modalIndex + 1) % imgCount;
+  updateModal();
+}
+
+// Event listener para fechar modal ao clicar no fundo
+document.getElementById("project-modal").addEventListener("click", e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+// Event listener para teclado (Esc para fechar, setas para navegar)
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    closeModal();
+  } else if (e.key === "ArrowLeft") {
+    modalPrev();
+  } else if (e.key === "ArrowRight") {
+    modalNext();
   }
+});
+// Função para criar o modal de tela cheia, zoom, pinch e swipe das imagens do projeto
+const modalImg = document.getElementById("modal-img");
+let startX = 0,
+  endX = 0,
+  isDragging = false;
+let lastTouchDistance = null;
+modalImg.style.cursor = "pointer";
 
-  const translations = {
-    pt: {
-      sections: {
-        Aluminum: 'Alumínio',
-        MetalConstructions: 'Construções Metálicas',
-        MetalSolutions: 'Soluções Metálicas'
-      },
-      home: {
-        title: 'Bem-vindo ao Grupo Ribeiro & Moreira',
-        subtitle: 'Construções Metálicas, Soluções Metálicas',
-        buttons: {
-          alum: 'Alumínio',
-          constr: 'Construções',
-          sol: 'Soluções Metálicas'
-        }
-      },
-      menu: {
-        home: 'Home',
-        alum: 'Alumínio',
-        constr: 'Construções Metálicas',
-        sol: 'Soluções Metálicas'
-      }
-    },
-    en: {
-      sections: {
-        Aluminum: 'Aluminum',
-        MetalConstructions: 'Metal Constructions',
-        MetalSolutions: 'Metal Solutions'
-      },
-      home: {
-        title: 'Welcome to Grupo Ribeiro & Moreira',
-        subtitle: 'Metal Constructions, Metal Solutions',
-        buttons: {
-          alum: 'Aluminum',
-          constr: 'Constructions',
-          sol: 'Metal Solutions'
-        }
-      },
-      menu: {
-        home: 'Home',
-        alum: 'Aluminum',
-        constr: 'Metal Constructions',
-        sol: 'Metal Solutions'
-      }
-    },
-    es: {
-      sections: {
-        Aluminum: 'Aluminio',
-        MetalConstructions: 'Construcciones Metálicas',
-        MetalSolutions: 'Soluciones Metálicas'
-      },
-      home: {
-        title: 'Bienvenido al Grupo Ribeiro & Moreira',
-        subtitle: 'Construcciones Metálicas, Soluciones Metálicas',
-        buttons: {
-          alum: 'Aluminio',
-          constr: 'Construcciones',
-          sol: 'Soluciones Metálicas'
-        }
-      },
-      menu: {
-        home: 'Inicio',
-        alum: 'Aluminio',
-        constr: 'Construcciones Metálicas',
-        sol: 'Soluciones Metálicas'
-      }
-    },
-    fr: {
-      sections: {
-        Aluminum: 'Aluminium',
-        MetalConstructions: 'Constructions Métalliques',
-        MetalSolutions: 'Solutions Métalliques'
-      },
-      home: {
-        title: 'Bienvenue au Groupe Ribeiro & Moreira',
-        subtitle: 'Constructions Métalliques, Solutions Métalliques',
-        buttons: {
-          alum: 'Aluminium',
-          constr: 'Constructions',
-          sol: 'Solutions Métalliques'
-        }
-      },
-      menu: {
-        home: 'Accueil',
-        alum: 'Aluminium',
-        constr: 'Constructions Métalliques',
-        sol: 'Solutions Métalliques'
-      }
-    }
-  };
-
-  function setLanguage(lang) {
-    currentLang = lang;
-
-    document.querySelectorAll('.project-title').forEach((titleDiv) => {
-      const key = titleDiv.id.replace('title-', '');
-      if (projectsData[key] && projectsData[key].title) {
-        titleDiv.innerText = projectsData[key].title[lang] || '';
-      }
-    });
-
-    document.querySelectorAll('.project-desc').forEach((descDiv) => {
-      const key = descDiv.id.replace('desc-', '');
-      if (projectsData[key] && projectsData[key].descriptions) {
-        descDiv.innerText = projectsData[key].descriptions[lang] || '';
-      }
-    });
-
-    cm_feCategories.forEach((cat) => {
-      const btn = document.getElementById('cm_fe-cat-' + cat.id);
-      if (btn) btn.innerText = cat.titles[lang] || cat.id;
-    });
-
-    aluminumCategories.forEach((cat) => {
-      const btn = document.getElementById('alum-cat-' + cat.id);
-      if (btn) btn.innerText = cat.titles[lang] || cat.id;
-    });
-
-    const homeTexts = translations[lang].home;
-    document.getElementById('title-main').innerText = homeTexts.title;
-    document.getElementById('subtitle-main').innerText = homeTexts.subtitle;
-    document.getElementById('btn-aluminio').innerText = homeTexts.buttons.alum;
-    document.getElementById('btn-construcoes').innerText = homeTexts.buttons.constr;
-    document.getElementById('btn-solucoes').innerText = homeTexts.buttons.sol;
-
-    const menuTexts = translations[lang].menu;
-    document.getElementById('menu-home-label').innerText = menuTexts.home;
-    document.getElementById('menu-al-label').innerText = menuTexts.alum;
-    document.getElementById('menu-co-label').innerText = menuTexts.constr;
-    document.getElementById('menu-sm-label').innerText = menuTexts.sol;
-
-    Object.entries(translations[lang].sections).forEach(([sectionId, title]) => {
-      const el = document.querySelector(`#${sectionId} > h2`);
-      if (el) el.innerText = title;
-    });
-  }
-
-  // Modal control functions
-  let modalProject = null;
-  let modalIndex = 0;
-
-  function openModal(projKey) {
-    modalProject = projKey;
-    modalIndex = 0;
-    updateModal();
-    const modal = document.getElementById('project-modal');
-    modal.style.display = 'flex';
-    modal.setAttribute('aria-hidden', 'false');
-  }
-
-  function closeModal() {
-    const modal = document.getElementById('project-modal');
-    modal.style.display = 'none';
-    modal.setAttribute('aria-hidden', 'true');
-    modalProject = null;
-    modalIndex = 0;
-  }
-
-  function updateModal() {
-    if (!modalProject) return;
-    const proj = projectsData[modalProject];
-    if (!proj) return;
-    const imgEl = document.getElementById('modal-img');
-    const descEl = document.getElementById('modal-description');
-    imgEl.src = proj.images && proj.images[modalIndex] ? proj.images[modalIndex] : '';
-    descEl.innerText = proj.descriptions && proj.descriptions[currentLang] ? proj.descriptions[currentLang] : '';
-  }
-
-  function modalPrev() {
-    if (!modalProj/ect) return;
-    const imgCount = (projectsData[modalProject].images || []).length;
-    if (imgCount === 0) return;
-    modalIndex = (modalIndex - 1 + imgCount) % imgCount;
-    updateModal();
-  }
-
-  function modalNext() {
-    if (!modalProject) return;
-    const imgCount = (projectsData[modalProject].images || []).length;
-    if (imgCount === 0) return;
-    modalIndex = (modalIndex + 1) % imgCount;
-    updateModal();
-  }
-
-  document.getElementById('project-modal').addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) closeModal();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-    else if (e.key === 'ArrowLeft') modalPrev();
-    else if (e.key === 'ArrowRight') modalNext();
-  });
-
-// Controle amélioré do modal-img para pinch-to-zoom e swipe separados, e opção fullscreen ao clicar
-(function() {
-  const modalImg = document.getElementById('modal-img');
-  let startX = 0, endX = 0, isDragging = false;
-  let lastTouchDistance = null;
-
-  modalImg.style.cursor = 'pointer';
-
-  // Detecta o início do touch
-  modalImg.addEventListener('touchstart', e => {
-    if (e.touches.length === 1) {
-      startX = e.touches[0].clientX;
-      isDragging = true;
-      lastTouchDistance = null;
-    } else if (e.touches.length === 2) {
-      // Pinch zoom começa
-      isDragging = false;
-      lastTouchDistance = getTouchDistance(e.touches);
-      // Define transform origin para o centro do gesto
-      let centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-      let centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-      const rect = modalImg.getBoundingClientRect();
-      const originX = ((centerX - rect.left) / rect.width) * 100;
-      const originY = ((centerY - rect.top) / rect.height) * 100;
-      modalImg.style.transformOrigin = `${originX}% ${originY}%`;
-    }
-  }, { passive: false });
-
-  // Detecta movimento do touch
-  modalImg.addEventListener('touchmove', e => {
-    if (e.touches.length === 1 && isDragging) {
-      endX = e.touches[0].clientX;
-    } else if (e.touches.length === 2) {
-      e.preventDefault(); // impede scroll da página
-      let currentDistance = getTouchDistance(e.touches);
-      let scale = 1;
-      if (lastTouchDistance) {
-        scale = currentDistance / lastTouchDistance;
-      }
-      lastTouchDistance = currentDistance;
-
-      const currentTransform = window.getComputedStyle(modalImg).transform;
-      let matrix = currentTransform === 'none' ? [1,0,0,1,0,0] : currentTransform.match(/matrix3d\((.+)\)/) ? currentTransform.match(/matrix3d\((.+)\)/)[1].split(', ') : currentTransform.match(/matrix\((.+)\)/)[1].split(', ');
-      let currentScaleX = parseFloat(matrix[0]);
-      let currentScaleY = parseFloat(matrix[3]);
-      let newScaleX = currentScaleX * scale;
-      let newScaleY = currentScaleY * scale;
-      newScaleX = Math.min(Math.max(1, newScaleX), 4);
-      newScaleY = Math.min(Math.max(1, newScaleY), 4);
-      modalImg.style.transform = `scale(${newScaleX}, ${newScaleY})`;
-    }
-  }, { passive: false });
-
-  // Detecta fim do toque para swipe
-  modalImg.addEventListener('touchend', e => {
-    if (!isDragging) return;
+// Detecta o início do toque para swipe/drag
+modalImg.addEventListener("touchstart", e => {
+  if (e.touches.length === 1) {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    lastTouchDistance = null;
+  } else if (e.touches.length === 2) {
     isDragging = false;
-    const diffX = endX - startX;
-    const threshold = 50;
-    if (Math.abs(diffX) > threshold) {
-      if (diffX > 0) modalPrev();
-      else modalNext();
-    }
-    endX = 0;
-    startX = 0;
-  });
+    lastTouchDistance = getTouchDistance(e.touches);
 
-  // Função auxiliar para distância entre dois toques
-  function getTouchDistance(touches) {
-    const [touch1, touch2] = touches;
-    const dx = touch2.clientX - touch1.clientX;
-    const dy = touch2.clientY - touch1.clientY;
-    return Math.hypot(dx, dy);
+    // Define a origem da transformação para o centro do gesto
+    let centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+    let centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+    const rect = modalImg.getBoundingClientRect();
+
+    const originX = ((centerX - rect.left) / rect.width) * 100;
+    const originY = ((centerY - rect.top) / rect.height) * 100;
+    modalImg.style.transformOrigin = originX + "% " + originY + "%";
+  }
+});
+
+// Detecta o movimento do toque para swipe e pinch zoom
+modalImg.addEventListener("touchmove", e => {
+  if (e.touches.length === 1 && isDragging) {
+    endX = e.touches[0].clientX;
+  } else if (e.touches.length === 2) {
+    e.preventDefault(); // impede scroll da página
+    let currentDistance = getTouchDistance(e.touches);
+    let scale = 1;
+    if (lastTouchDistance) {
+      scale = currentDistance / lastTouchDistance;
+    }
+    lastTouchDistance = currentDistance;
+
+    let currentTransform = window.getComputedStyle(modalImg).transform;
+    let matrix =
+      currentTransform === "none"
+        ? [1, 0, 0, 1, 0, 0]
+        : currentTransform.match(/matrix\(([^)]+)\)/)[1].split(",").map(parseFloat);
+
+    let currentScaleX = matrix[0];
+    let currentScaleY = matrix[3];
+    let newScaleX = currentScaleX * scale;
+    let newScaleY = currentScaleY * scale;
+
+    newScaleX = Math.min(Math.max(1, newScaleX), 4);
+    newScaleY = Math.min(Math.max(1, newScaleY), 4);
+
+    modalImg.style.transform = `scale(${newScaleX},${newScaleY})`;
+  }
+});
+
+// Detecta o fim do toque para swipe
+modalImg.addEventListener("touchend", e => {
+  if (!isDragging) return;
+  isDragging = false;
+  const diffX = endX - startX;
+  const threshold = 50;
+  if (Math.abs(diffX) > threshold) {
+    if (diffX > 0) modalPrev();
+    else modalNext();
+  }
+  endX = 0;
+  startX = 0;
+});
+
+// Função auxiliar para calcular a distância entre dois toques
+function getTouchDistance(touches) {
+  const touch1 = touches[0];
+  const touch2 = touches[1];
+  const dx = touch2.clientX - touch1.clientX;
+  const dy = touch2.clientY - touch1.clientY;
+  return Math.hypot(dx, dy);
+}
+
+// Toggle de tela cheia ao clicar na imagem
+modalImg.addEventListener("click", () => {
+  const currentTransform = modalImg.style.transform;
+  if (currentTransform && currentTransform !== "scale(1)") {
+    modalImg.style.transform = "scale(1)";
+    return;
   }
 
-  // Toggle tela cheia ao clicar
-  modalImg.addEventListener('click', () => {
-    // Se a imagem estiver zoomada (>1), resetar zoom ao clicar
-    const currentTransform = modalImg.style.transform;
-    if (currentTransform && currentTransform !== '' && currentTransform !== 'scale(1)') {
-      modalImg.style.transform = 'scale(1)';
-      return;
-    }
+  if (!document.fullscreenElement) {
+    if (modalImg.requestFullscreen) modalImg.requestFullscreen();
+    else if (modalImg.webkitRequestFullscreen) modalImg.webkitRequestFullscreen();
+    else if (modalImg.msRequestFullscreen) modalImg.msRequestFullscreen();
+  } else {
+    if (document.exitFullscreen) document.exitFullscreen();
+  }
+});
 
-    // Se não for fullscreen, ativa fullscreen, se for, sai
+// Reset zoom ao sair do fullscreen
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement) {
+    modalImg.style.transform = "scale(1)";
+    modalImg.style.transformOrigin = "50% 50%";
+  }
+});
+
+// Botão para fullscreen dentro do modal
+const btnFullscreen = document.getElementById("btn-fullscreen");
+if (btnFullscreen) {
+  btnFullscreen.addEventListener("click", e => {
+    e.stopPropagation(); // impede disparar evento do modal
     if (!document.fullscreenElement) {
-      if (modalImg.requestFullscreen) modalImg.requestFullscreen();
+      if (modalImg.requestFullscreen) modalImg.requestFullscreen().catch(() => alert("Fullscreen não suportado ou permitido"));
       else if (modalImg.webkitRequestFullscreen) modalImg.webkitRequestFullscreen();
       else if (modalImg.msRequestFullscreen) modalImg.msRequestFullscreen();
     } else {
@@ -1140,47 +1191,12 @@ function showGateProjects(categoryId, btn) {
       else if (document.msExitFullscreen) document.msExitFullscreen();
     }
   });
+}
 
-  // Reset zoom ao sair do fullscreen
-  document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement) {
-      modalImg.style.transform = 'scale(1)';
-      modalImg.style.transformOrigin = '50% 50%';
-    }
-  });
-})();
+// Configuração inicial da linguagem e exibição da home
+setLanguage(currentLang);
+showSection("Home");
 
-
-const btnFullscreen = document.getElementById('btn-fullscreen');
-const modalImg = document.getElementById('modal-img');
-
-btnFullscreen.addEventListener('click', (e) => {
-  e.stopPropagation(); // para não disparar outros eventos do modal
-
-  if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-    if (modalImg.requestFullscreen) {
-      modalImg.requestFullscreen().catch(() => alert('Fullscreen não suportado ou permitido'));
-    } else if (modalImg.webkitRequestFullscreen) {
-      modalImg.webkitRequestFullscreen();
-    } else if (modalImg.msRequestFullscreen) {
-      modalImg.msRequestFullscreen();
-    }
-  } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-  }
-});
-
-
-  
-
-  setLanguage(currentLang);
-  showSection('Home');
 </script>
 
 </body>
