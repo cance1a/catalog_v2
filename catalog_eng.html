@@ -181,6 +181,8 @@
     font-size: 1em;
     font-weight: 700;
     border-radius: 9px;
+    margin-right: 12px;
+    margin-bottom: 10px;
     border: none;
     background: #263b30;
     color: #fff;
@@ -334,6 +336,8 @@
     }
   }
 </style>
+</head>
+<body>
 
 <div class="sidebar" aria-label="Main sidebar" role="navigation">
   <div class="menu" role="menu" aria-label="Main menu">
@@ -377,8 +381,7 @@
     <p id="subtitle-main">Construções Metálicas, Soluções Metálicas</p>
     <button class="option" id="btn-aluminio" onclick="showSection('Aluminum')">Alumínio</button>
     <button class="option" id="btn-construcoes" onclick="showSection('MetalConstructions')">Construções</button>
-    <button class="option" id="btn-solucoes" onclick="showSection('MetalSolutions')">Soluções Metálicas</button>
-
+    <button class="option" id="btn-solucoes" onclick="showSection('MetalSolutions')">Serviços Metálicas</button>
   </div>
 </div>
 
@@ -408,58 +411,30 @@
 </div>
 
 <script>
-  'use strict';
+'use strict';
 
-  const cm_feCategories = [
-    {
-      id: 'estrutura_fe',
-      prefix: 'estm-',
-      titles: { pt: 'Portões de Alumínio', en: 'Aluminum Gates', es: 'Portones de Aluminio', fr: 'Portails en Aluminium' }
-    },
-    {
-      id: 'escadas_fe',
-      prefix: 'esc-',
-      titles: { pt: 'Portões de Ferro', en: 'Iron Gates', es: 'Portones de Hierro', fr: 'Portails en Fer' }
-    }
-    {
-      id: 'guardas_fe',
-      prefix: 'gua-',
-      titles: { pt: 'Portões de Ferro', en: 'Iron Gates', es: 'Portones de Hierro', fr: 'Portails en Fer' }
-    }
-    {
-      id: 'portoes_fe',
-      prefix: 'fepo-',
-      titles: { pt: 'Portões de Ferro', en: 'Iron Gates', es: 'Portones de Hierro', fr: 'Portails en Fer' }
-    }
-    {
-      id: 'tapavistas_fe',
-      prefix: 'tapavistas-',
-      titles: { pt: 'Portões de Ferro', en: 'Iron Gates', es: 'Portones de Hierro', fr: 'Portails en Fer' }
-    }
-  ];
+// Alteração principal no array cm_feCategories com títulos distintos para subseções da secção Construções Metálicas:
+const cm_feCategories = [
+  { id: 'estrutura_fe', prefix: 'est_m-', titles: { pt: 'Estrutura', en: 'Iron', es: 'Estructura', fr: 'Structure' } },
+  { id: 'escadas_fe', prefix: 'esc_m-', titles: { pt: 'Escadas', en: 'Iron', es: 'Escaleras', fr: 'Escaliers' } },
+  { id: 'guardas_fe', prefix: 'gua_m-', titles: { pt: 'Guardas', en: 'Iron', es: 'Barandillas', fr: 'Garde-corps' } },
+  { id: 'portoes_fe', prefix: 'fepo_m-', titles: { pt: 'Portões', en: 'Iron', es: 'Portones', fr: 'Portails' } },
+  { id: 'tapavistas_fe', prefix: 'tapavistas_m-', titles: { pt: 'Tapa Vistas', en: 'Iron', es: 'Tapavistas  ', fr: 'Brise-vues' } }
+];
 
-  const aluminumCategories = [
-    {
-      id: 'portoes',
-      prefix: 'alpo-',
-      titles: { pt: 'Portões', en: 'Façades', es: 'Fachadas', fr: 'Façades' }
-    },
-    {
-      id: 'tapavistas',
-      prefix: 'altapa_vistas-',
-      titles: { pt: 'Tapa Vistas', en: 'Railings', es: 'Barandillas', fr: 'Garde-corps' }
-    },
-    {
-      id: 'claraboias',
-      prefix: 'alclaraboia-',
-      titles: { pt: 'Claraboias', en: 'Stairs', es: 'Escaleras', fr: 'Escaliers' }
-    },
-    {
-      id: 'caixilharia',
-      prefix: 'alcaixilharia-',
-      titles: { pt: 'Caixilharia', en: 'Stairs', es: 'Escaleras', fr: 'Escaliers' }
-    },
-  ];
+const aluminumCategories = [
+  { id: 'portoes', prefix: 'alpo-', titles: { pt: 'Portões', en: 'Façades', es: 'Fachadas', fr: 'Façades' } },
+  { id: 'tapavistas', prefix: 'altapa_vistas-', titles: { pt: 'Tapa Vistas', en: 'Railings', es: 'Barandillas', fr: 'Garde-corps' } },
+  { id: 'claraboias', prefix: 'alclaraboia-', titles: { pt: 'Claraboias', en: 'Stairs', es: 'Escaleras', fr: 'Escaliers' } },
+  { id: 'caixilharia', prefix: 'alcaixilharia-', titles: { pt: 'Caixilharia', en: 'Stairs', es: 'Escaleras', fr: 'Escaliers' } },
+];
+
+const metalSolutionsCategories = [
+  {id: 'corte_laser', prefix: 'sol-corte_laser-', titles: { pt: 'Corte Laser', en: 'Laser Cutting', es: 'Corte Láser', fr: 'Découpe Laser' } },
+  {id: 'remates', prefix: 'sol-remates-', titles: { pt: 'Remates', en: 'Finishes', es: 'Acabados', fr: 'Finitions' } },
+  { id: 'quinagem', prefix: 'sol-quinagem-', titles: { pt: 'Quinagem', en: 'Bending', es: 'Doblado', fr: 'Pliage' } }
+];
+
 
 const projectsData = {
 
@@ -657,57 +632,57 @@ const projectsData = {
   } 
 };
 
+let currentLang = 'pt';
+let currentCm_feCategory = cm_feCategories[0].id;
+let currentAluminumCategory = aluminumCategories[0].id;
 
-  let currentLang = 'pt';
-  let currentCm_feCategory = cm_feCategories[0].id;
-  let currentAluminumCategory = aluminumCategories[0].id;
+const sectionsInfo = {
+  Aluminum: { name: 'Alumínio', prefix: null, categories: aluminumCategories },
+  MetalConstructions: { name: 'Construções Metálicas', prefix: null, categories: cm_feCategories },
+  MetalSolutions: { name: 'Soluções Metálicas', prefix: null, categories: metalSolutionsCategories }
+};
 
-  const sectionsInfo = {
-    Aluminum: { name: 'Alumínio', prefix: null, categories: aluminumCategories },
-    MetalConstructions: { name: 'Construções Metálicas', prefix: null, categories: cm_feCategories },
-    MetalSolutions: { name: 'Soluções Metálicas', prefix: 'sm-' },
-  };
 
-  function createProjectCard(projKey, projData) {
-    const projDiv = document.createElement('div');
-    projDiv.className = 'project';
-    projDiv.onclick = () => openModal(projKey);
+function createProjectCard(projKey, projData) {
+  const projDiv = document.createElement('div');
+  projDiv.className = 'project';
+  projDiv.onclick = () => openModal(projKey);
 
-    const img = document.createElement('img');
-    img.src = projData.images && projData.images.length > 0 ? projData.images[0] : '';
-    img.alt = projData.title[currentLang] || 'Project image';
-    projDiv.appendChild(img);
+  const img = document.createElement('img');
+  img.src = projData.images && projData.images.length > 0 ? projData.images[0] : '';
+  img.alt = projData.title[currentLang] || 'Project image';
+  projDiv.appendChild(img);
 
-    const titleDiv = document.createElement('div');
-    titleDiv.className = 'project-title';
-    titleDiv.id = 'title-' + projKey;
-    titleDiv.innerText = projData.title[currentLang] || '';
-    projDiv.appendChild(titleDiv);
+  const titleDiv = document.createElement('div');
+  titleDiv.className = 'project-title';
+  titleDiv.id = 'title-' + projKey;
+  titleDiv.innerText = projData.title[currentLang] || '';
+  projDiv.appendChild(titleDiv);
 
-    const descDiv = document.createElement('div');
-    descDiv.className = 'project-desc';
-    descDiv.id = 'desc-' + projKey;
-    descDiv.innerText = projData.descriptions[currentLang] || '';
-    projDiv.appendChild(descDiv);
+  const descDiv = document.createElement('div');
+  descDiv.className = 'project-desc';
+  descDiv.id = 'desc-' + projKey;
+  descDiv.innerText = projData.descriptions[currentLang] || '';
+  projDiv.appendChild(descDiv);
 
-    return projDiv;
-  }
+  return projDiv;
+}
 
-  const container = document.getElementById('sections-container');
+const container = document.getElementById('sections-container');
 
-  Object.entries(sectionsInfo).forEach(([key, value]) => {
-    const section = document.createElement('div');
-    section.id = key;
-    section.className = 'section';
+Object.entries(sectionsInfo).forEach(([key, value]) => {
+  const section = document.createElement('div');
+  section.id = key;
+  section.className = 'section';
 
-    const h2 = document.createElement('h2');
-    h2.innerText = value.name;
-    section.appendChild(h2);
+  const h2 = document.createElement('h2');
+  h2.innerText = value.name;
+  section.appendChild(h2);
 
-   // Criar botões para categorias
   if (value.categories) {
     const catList = document.createElement("div");
-    catList.className = "gate-category-list";
+    catList.className = key === 'MetalConstructions' ? "cmfe-categories" : "alum-categories";
+    catList.id = key === 'MetalConstructions' ? "cmfe-categories" : "alum-categories";
 
     value.categories.forEach(cat => {
       const btn = document.createElement("button");
@@ -716,142 +691,129 @@ const projectsData = {
       btn.innerText = cat.titles[currentLang];
       btn.onclick = () => {
         if (key === "MetalConstructions")
-          showCmfeProjects(cat.id, btn);
+          showGateProjects(cat.id, btn);
         else if (key === "Aluminum")
           showAluminumProjects(cat.id, btn);
       };
       btn.id = key === "MetalConstructions" ? "cmfe-cat-" + cat.id : "alum-cat-" + cat.id;
 
       catList.appendChild(btn);
-    });  
+    });
 
-      section.appendChild(catList);
+    section.appendChild(catList);
 
-      const list = document.createElement('div');
-      list.className = 'project-list';
-      list.id = key === 'Gates' ? 'gate-project-list' : 'alum-project-list';
-      section.appendChild(list);
-    } else {
-      const list = document.createElement('div');
-      list.className = 'project-list';
+    const list = document.createElement('div');
+    list.className = 'project-list';
+    list.id = key === 'MetalConstructions' ? 'gate-project-list' : 'alum-project-list';
+    section.appendChild(list);
+  } else {
+    const list = document.createElement('div');
+    list.className = 'project-list';
 
-      Object.entries(projectsData).forEach(([projKey, projData]) => {
-        if (projKey.startsWith(value.prefix)) {
-          const projDiv = createProjectCard(projKey, projData);
-          list.appendChild(projDiv);
-        }
-      });
-
-      section.appendChild(list);
-    }
-
-    container.appendChild(section);
-  });
-
-    // Atualiza botões cmfeCategories
-  cmfeCategories.forEach(cat => {
-    const btn = document.getElementById("cmfe-cat-" + cat.id);
-    if (btn) btn.innerText = cat.titles[lang];
-  });
-
-  function showAluminumProjects(categoryId, btn) {
-  const list = document.getElementById('alum-project-list');
-  const cat = aluminumCategories.find(c => c.id === categoryId);
-
-  // limpar estado ativo anterior
-  document.querySelectorAll('#alum-categories .gate-category-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-
-  // limpar lista antes de carregar
-  list.innerHTML = '';
-  if (!cat) return;
-
-  // gerar projetos que correspondem ao prefixo da categoria
-  Object.entries(projectsData).forEach(([key, proj]) => {
-    if (key.startsWith(cat.prefix)) {
-      const div = createProjectCard(key, proj);
-      list.appendChild(div);
-    }
-  });
-
-  // animar entrada
-  list.querySelectorAll('.project').forEach((proj, i) => {
-    setTimeout(() => proj.classList.add('show'), i * 120);
-  });
-}
-
-
-function showGateProjects(categoryId, btn) {
-  const list = document.getElementById('gate-project-list');
-  const cat = gateCategories.find(c => c.id === categoryId);
-
-  // limpar estado ativo anterior
-  document.querySelectorAll('#gate-categories .gate-category-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-
-  // limpar lista antes de carregar
-  list.innerHTML = '';
-  if (!cat) return;
-
-  // gerar projetos que correspondem ao prefixo da categoria
-  Object.entries(projectsData).forEach(([key, proj]) => {
-    if (key.startsWith(cat.prefix)) {
-      const div = createProjectCard(key, proj);
-      list.appendChild(div);
-    }
-  });
-
-  // animar entrada
-  list.querySelectorAll('.project').forEach((proj, i) => {
-    setTimeout(() => proj.classList.add('show'), i * 120);
-  });
-}
-
-
-
-  function showSection(sectionId) {
-    const home = document.getElementById('Home');
-    const allSections = [...document.querySelectorAll('.section'), home];
-    allSections.forEach(sec => {
-      if (!sec) return;
-      if (sec.id !== sectionId) {
-        sec.style.display = 'none';
-        sec.querySelectorAll('.project').forEach(p => p.classList.remove('show'));
+    Object.entries(projectsData).forEach(([projKey, projData]) => {
+      if (projKey.startsWith(value.prefix)) {
+        const projDiv = createProjectCard(projKey, projData);
+        list.appendChild(projDiv);
       }
     });
 
-    const newSec = sectionId === 'Home' ? home : document.getElementById(sectionId);
-    if (!newSec) return;
-
-    newSec.style.display = sectionId === 'Home' ? 'flex' : 'block';
-
-    if (sectionId !== 'Home') {
-      if (sectionId === 'MetalConstructions') {
-        if (currentGateCategory) {
-          showGateProjects(currentCm_feCategoryCategory, document.getElementById('cm_fe-cat-' + currentCm_feCategoryCategory));
-        }
-      }
-      if (sectionId === 'Aluminum') {
-        if (currentAluminumCategory) {
-          showAluminumProjects(currentAluminumCategory, document.getElementById('alum-cat-' + currentAluminumCategory));
-        }
-      }
-      const projects = newSec.querySelectorAll('.project');
-      projects.forEach((proj, i) => {
-        setTimeout(() => proj.classList.add('show'), i * 150);
-      });
-    }
-
-    document.querySelectorAll('.menu-item').forEach(mi => mi.classList.remove('active'));
-    const menuMap = { Home: 'icon-home', Aluminum: 'icon-al', MetalConstructions: 'icon-co', MetalSolutions: 'icon-sm'};
-    const menuId = menuMap[sectionId];
-    if (menuId) {
-      const el = document.getElementById(menuId);
-      if (el) el.classList.add('active');
-    }
+    section.appendChild(list);
   }
 
-  const translations = {
+  container.appendChild(section);
+});
+
+function showGateProjects(categoryId, btn) {
+  const list = document.getElementById('gate-project-list');
+  if (!list) return;
+  list.innerHTML = '';
+
+  document.querySelectorAll('#cmfe-categories .gate-category-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+
+  const cat = cm_feCategories.find(c => c.id === categoryId);
+  if (!cat) return;
+
+  Object.entries(projectsData).forEach(([key, proj]) => {
+    if (key.startsWith(cat.prefix)) {
+      const div = createProjectCard(key, proj);
+      list.appendChild(div);
+    }
+  });
+
+  list.querySelectorAll('.project').forEach((proj, i) => {
+    setTimeout(() => proj.classList.add('show'), i * 120);
+  });
+}
+
+function showAluminumProjects(categoryId, btn) {
+  const list = document.getElementById('alum-project-list');
+  if (!list) return;
+  list.innerHTML = '';
+
+  document.querySelectorAll('#alum-categories .gate-category-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+
+  const cat = aluminumCategories.find(c => c.id === categoryId);
+  if (!cat) return;
+
+  Object.entries(projectsData).forEach(([key, proj]) => {
+    if (key.startsWith(cat.prefix)) {
+      const div = createProjectCard(key, proj);
+      list.appendChild(div);
+    }
+  });
+
+  list.querySelectorAll('.project').forEach((proj, i) => {
+    setTimeout(() => proj.classList.add('show'), i * 120);
+  });
+}
+
+function showSection(sectionId) {
+  const home = document.getElementById('Home');
+  const allSections = [...document.querySelectorAll('.section'), home];
+  allSections.forEach(sec => {
+    if (!sec) return;
+    if (sec.id !== sectionId) {
+      sec.style.display = 'none';
+      sec.querySelectorAll('.project').forEach(p => p.classList.remove('show'));
+    }
+  });
+
+  const newSec = sectionId === 'Home' ? home : document.getElementById(sectionId);
+  if (!newSec) return;
+
+  newSec.style.display = sectionId === 'Home' ? 'flex' : 'block';
+
+  if (sectionId !== 'Home') {
+    if (sectionId === 'MetalConstructions') {
+      if (currentCm_feCategory) {
+        showGateProjects(currentCm_feCategory, document.getElementById('cmfe-cat-' + currentCm_feCategory));
+      }
+    }
+    if (sectionId === 'Aluminum') {
+      if (currentAluminumCategory) {
+        showAluminumProjects(currentAluminumCategory, document.getElementById('alum-cat-' + currentAluminumCategory));
+      }
+    }
+    const projects = newSec.querySelectorAll('.project');
+    projects.forEach((proj, i) => {
+      setTimeout(() => proj.classList.add('show'), i * 150);
+    });
+  }
+
+  document.querySelectorAll('.menu-item').forEach(mi => mi.classList.remove('active'));
+  const menuMap = { Home: 'icon-home', Aluminum: 'icon-al', MetalConstructions: 'icon-co', MetalSolutions: 'icon-sm'};
+  const menuId = menuMap[sectionId];
+  if (menuId) {
+    const el = document.getElementById(menuId);
+    if (el) el.classList.add('active');
+  }
+}
+
+// restante código do modal, setLanguage, etc. permanece igual como você já tinha
+
+ const translations = {
     pt: {
       sections: {
         Aluminum: 'Alumínio',
@@ -1020,7 +982,7 @@ function showGateProjects(categoryId, btn) {
   }
 
   function modalPrev() {
-    if (!modalProj/ect) return;
+    if (!modalProject) return;
     const imgCount = (projectsData[modalProject].images || []).length;
     if (imgCount === 0) return;
     modalIndex = (modalIndex - 1 + imgCount) % imgCount;
@@ -1177,10 +1139,9 @@ btnFullscreen.addEventListener('click', (e) => {
 });
 
 
-  
+setLanguage(currentLang);
+showSection('Home');
 
-  setLanguage(currentLang);
-  showSection('Home');
 </script>
 
 </body>
